@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24 Feb 2017 pada 15.57
--- Versi Server: 10.1.13-MariaDB
--- PHP Version: 7.0.8
+-- Waktu pembuatan: 05 Apr 2021 pada 04.07
+-- Versi server: 10.1.38-MariaDB
+-- Versi PHP: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cendana`
+-- Database: `crud`
 --
 
 -- --------------------------------------------------------
@@ -39,8 +41,30 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `nama`, `foto`) VALUES
-(1, 'auwfar', 'f0a047143d1da15b630c73f0256d5db0', 'Achmad Chadil Auwfar', 'Koala.jpg'),
-(2, 'ozil', 'f4e404c7f815fc68e7ce8e3c2e61e347', 'Mesut ', 'profil2.jpg');
+(3, 'admin', '21232f297a57a5a743894a0e4a801fc3 ', 'Admin', 'Lambang_Kementerian_Lingkungan_Hidup_dan_Kehutanan.png');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kegiatan`
+--
+
+CREATE TABLE `kegiatan` (
+  `id_kegiatan` int(11) NOT NULL,
+  `id_program` int(11) NOT NULL,
+  `kode_kegiatan` varchar(50) NOT NULL,
+  `nama_kegiatan` text NOT NULL,
+  `pagu` bigint(20) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `kegiatan`
+--
+
+INSERT INTO `kegiatan` (`id_kegiatan`, `id_program`, `kode_kegiatan`, `nama_kegiatan`, `pagu`) VALUES
+(1, 1, '5397', 'Peningkatan Perencanaan Pengelolaan Hutan Produksi', 0),
+(2, 1, '5398', 'Peningkatan Usaha Hutan Produksi', 123),
+(3, 2, '5396', 'Dukungan Manajemen dan Pelaksanaan Tugas Teknis Lainnya Ditjen Pengelolaan Hutan Produksi Lestari', 62158430000);
 
 -- --------------------------------------------------------
 
@@ -83,6 +107,21 @@ INSERT INTO `kota` (`id`, `nama`) VALUES
 (17, 'Jakarta'),
 (21, 'Surabaya'),
 (22, 'Paris');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `output`
+--
+
+CREATE TABLE `output` (
+  `id_output` int(11) NOT NULL,
+  `id_program` int(11) NOT NULL,
+  `id_kegiatan` int(11) NOT NULL,
+  `kode_output` varchar(50) NOT NULL,
+  `nama_output` text NOT NULL,
+  `pagu` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -139,53 +178,114 @@ INSERT INTO `posisi` (`id`, `nama`) VALUES
 (4, 'Produk'),
 (5, 'Web Developer');
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `program`
+--
+
+CREATE TABLE `program` (
+  `id_program` int(11) NOT NULL,
+  `kode_program` varchar(50) NOT NULL,
+  `nama_program` text NOT NULL,
+  `pagu` bigint(20) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `program`
+--
+
+INSERT INTO `program` (`id_program`, `kode_program`, `nama_program`, `pagu`) VALUES
+(1, '029.03.FF', 'Program Pengelolaan Hutan Berkelanjutan', 83639526000),
+(2, '029.03.WA', 'Program Dukungan Manajemen', 62158430000);
+
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kelamin`
+-- Indeks untuk tabel `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  ADD PRIMARY KEY (`id_kegiatan`);
+
+--
+-- Indeks untuk tabel `kelamin`
 --
 ALTER TABLE `kelamin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kota`
+-- Indeks untuk tabel `kota`
 --
 ALTER TABLE `kota`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `posisi`
+-- Indeks untuk tabel `output`
+--
+ALTER TABLE `output`
+  ADD PRIMARY KEY (`id_output`);
+
+--
+-- Indeks untuk tabel `posisi`
 --
 ALTER TABLE `posisi`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indeks untuk tabel `program`
+--
+ALTER TABLE `program`
+  ADD PRIMARY KEY (`id_program`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `kota`
+-- AUTO_INCREMENT untuk tabel `kegiatan`
+--
+ALTER TABLE `kegiatan`
+  MODIFY `id_kegiatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `kota`
 --
 ALTER TABLE `kota`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
--- AUTO_INCREMENT for table `posisi`
+-- AUTO_INCREMENT untuk tabel `output`
+--
+ALTER TABLE `output`
+  MODIFY `id_output` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `posisi`
 --
 ALTER TABLE `posisi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `program`
+--
+ALTER TABLE `program`
+  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
