@@ -46,6 +46,13 @@
           <span>Data Kota</span>
         </a>
       </li> -->
+      <li class="treeview <?php if ($page == 'surat') {echo 'active';} ?>">
+          <a href="<?php echo base_url('Surat'); ?>">
+            <i class="fa fa-laptop"></i>
+            <span>Arsip Surat</span>
+          </a>
+          
+        </li>
       <li class="treeview">
           <a href="#">
             <i class="fa fa-laptop"></i>
