@@ -63,18 +63,18 @@
           </a>
           <ul class="treeview-menu">
             <li <?php if ($page == 'program') {echo 'class="active"';} ?>>
-              <a href="<?php echo base_url('Program'); ?>">
+              <a href="<?php echo base_url('Pegawai'); ?>">
                 <i class="fa fa-location-arrow"></i>
-                <span>Program</span>
+                <span>Pegawai</span>
               </a>
             </li>
             <li <?php if ($page == 'kegiatan') {echo 'class="active"';} ?>>
               <a href="<?php echo base_url('Kegiatan'); ?>">
                 <i class="fa fa-location-arrow"></i>
-                <span>Kegiatan</span>
+                <span>Surat</span>
               </a>
             </li>
-            <li <?php if ($page == 'output') {echo 'class="active"';} ?>>
+            <!-- <li <?php if ($page == 'output') {echo 'class="active"';} ?>>
               <a href="<?php echo base_url('Output'); ?>">
                 <i class="fa fa-location-arrow"></i>
                 <span>Output</span>
@@ -108,7 +108,7 @@
               <a href="<?php echo base_url('Detail'); ?>">
                 <i class="fa fa-location-arrow"></i>
                 <span>Detail</span>
-              </a>
+              </a> -->
             </li>
             
           </ul>

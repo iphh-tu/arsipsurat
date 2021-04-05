@@ -32,7 +32,7 @@ class Home extends AUTH_Controller {
 			$index++;
 		}
 
-		$kota 				= $this->M_kota->select_all();
+		$kota = $this->M_kota->select_all();
 		$index = 0;
 		foreach ($kota as $value) {
 		    $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
