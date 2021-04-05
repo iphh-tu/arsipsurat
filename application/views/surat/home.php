@@ -23,9 +23,9 @@
           <th class="col-md-2">Tanggal Agenda</th>
           <th class="col-md-2">Nomor Agenda</th>
           <th>Asal Surat</th>
-          <th>Tujuan</th>
+         <!--  <th>Tujuan</th>
           <th class="col-md-2">Nomor Surat</th>
-          <th class="col-md-2">Tanggal Surat</th>
+          <th class="col-md-2">Tanggal Surat</th> -->
           <th class="col-md-2">Perihal</th>
 
           <th style="text-align: center;">Aksi</th>
@@ -42,7 +42,7 @@
 
 <div id="tempat-modal"></div>
 
-<?php show_my_confirm('konfirmasiHapus', 'hapus-dataProgram', 'Hapus Data Ini?', 'Ya, Hapus Data Ini'); ?>
+<?php show_my_confirm('konfirmasiHapus', 'hapus-dataSurat', 'Hapus Data Ini?', 'Ya, Hapus Data Ini'); ?>
 <?php
   $data['judul'] = 'Surat';
   $data['url'] = 'Surat/import';

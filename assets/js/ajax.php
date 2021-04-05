@@ -149,37 +149,39 @@
 		});
 	}
 
-	var id_pegawai;
-	$(document).on("click", ".konfirmasiHapus-pegawai", function() {
-		id_pegawai = $(this).attr("data-id");
+	var no_agenda;
+	$(document).on("click", ".konfirmasiHapus-surat", function() {
+		no_agenda = $(this).attr("data-id");
+		//alert(no_agenda);
 	})
-	$(document).on("click", ".hapus-dataPegawai", function() {
-		var id = id_pegawai;
+	$(document).on("click", ".hapus-dataSurat", function() {
+		var id = no_agenda;
+		//alert(id);
 		
 		$.ajax({
 			method: "POST",
-			url: "<?php echo base_url('Pegawai/delete'); ?>",
-			data: "id=" +id
+			url: "<?php echo base_url('Surat/delete'); ?>",
+			data: "no_agenda=" +id
 		})
 		.done(function(data) {
 			$('#konfirmasiHapus').modal('hide');
-			tampilPegawai();
+			tampilSurat();
 			$('.msg').html(data);
 			effect_msg();
 		})
 	})
 
-	$(document).on("click", ".update-dataPegawai", function() {
+	$(document).on("click", ".upload-dataSurat", function() {
 		var id = $(this).attr("data-id");
 		
 		$.ajax({
 			method: "POST",
-			url: "<?php echo base_url('Pegawai/update'); ?>",
-			data: "id=" +id
+			url: "<?php echo base_url('Surat/upload'); ?>",
+			data: "no_agenda=" +id
 		})
 		.done(function(data) {
 			$('#tempat-modal').html(data);
-			$('#update-pegawai').modal('show');
+			$('#upload-surat').modal('show');
 		})
 	})
 
@@ -209,12 +211,12 @@
 		e.preventDefault();
 	});
 
-	$(document).on('submit', '#form-update-pegawai', function(e){
+	$(document).on('submit', '#form-upload-surat', function(e){
 		var data = $(this).serialize();
 
 		$.ajax({
 			method: 'POST',
-			url: '<?php echo base_url('Pegawai/prosesUpdate'); ?>',
+			url: '<?php echo base_url('Surat/prosesUpdate'); ?>',
 			data: data
 		})
 		.done(function(data) {
@@ -225,8 +227,8 @@
 				$('.form-msg').html(out.msg);
 				effect_msg_form();
 			} else {
-				document.getElementById("form-update-pegawai").reset();
-				$('#update-pegawai').modal('hide');
+				document.getElementById("form-upload-surat").reset();
+				$('#upload-surat').modal('hide');
 				$('.msg').html(out.msg);
 				effect_msg();
 			}
@@ -239,7 +241,7 @@
 	  $('.form-msg').html('');
 	})
 
-	$('#update-pegawai').on('hidden.bs.modal', function () {
+	$('#update-surat').on('hidden.bs.modal', function () {
 	  $('.form-msg').html('');
 	})
 	//Kota

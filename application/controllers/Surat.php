@@ -49,30 +49,43 @@ class Surat extends AUTH_Controller {
 		echo json_encode($out);
 	}
 
-	public function update() {
+	public function upload() {
 		$data['userdata'] 	= $this->userdata;
 
-		$id_surat 				= trim($_POST['id_surat']);
-		$data['datasurat'] 	= $this->M_surat->select_by_id($id_surat);
+		$no_agenda 				= trim($_POST['no_agenda']);
+		$data['datasurat'] 	= $this->M_surat->select_by_id($no_agenda);
 
-		echo show_my_modal('modals/modal_update_surat', 'update-surat', $data);
+		echo show_my_modal('modals/modal_upload_surat', 'upload-surat', $data);
 	}
 
 	public function prosesUpdate() {
-		$this->form_validation->set_rules('kode_surat', 'Kode surat', 'trim|required');
-		$this->form_validation->set_rules('nama_surat', 'Nama surat', 'trim|required');
-		$this->form_validation->set_rules('pagu', 'Pagu', '');
+		$this->form_validation->set_rules('no_agenda', 'Nomor Agenda', 'trim|required');
 
+		$no_agenda = trim($_POST['no_agenda']);
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->M_surat->update($data);
+			$config['upload_path'] = './assets/file/';
+			$config['allowed_types'] = 'pdf|doc|docx';
+			
+			$this->load->library('upload', $config);
+			
+			if (!$this->upload->do_upload('file')){
+				$error = array('error' => $this->upload->display_errors());
+			}
+			else{
+				$data_file = $this->upload->data();
+				$data['file'] = $data_file['file_name'];
+			}
+
+			$result = $this->M_surat->upload($data, $no_agenda);
 
 			if ($result > 0) {
+				$this->updateSurat();
 				$out['status'] = '';
-				$out['msg'] = show_succ_msg('Data surat Berhasil diupdate', '20px');
+				$out['msg'] = show_succ_msg('Data Surat Berhasil diupdate', '20px');
 			} else {
 				$out['status'] = '';
-				$out['msg'] = show_succ_msg('Data surat Gagal diupdate', '20px');
+				$out['msg'] = show_succ_msg('Data Surat Gagal diupdate', '20px');
 			}
 		} else {
 			$out['status'] = 'form';
@@ -83,13 +96,19 @@ class Surat extends AUTH_Controller {
 	}
 
 	public function delete() {
+		error_reporting(E_ALL);
 		$no_agenda = $_POST['no_agenda'];
 		$result = $this->M_surat->delete($no_agenda);
 		
 		if ($result > 0) {
-			echo show_succ_msg('Data surat Berhasil dihapus', '20px');
+			//echo $result;
+			echo show_succ_msg('Data Surat Berhasil dihapus', '20px');
+			//echo $no_agenda;
 		} else {
-			echo show_err_msg('Data surat Gagal dihapus', '20px');
+			//echo $result;
+
+			echo show_err_msg('Data Surat Gagal dihapus', '20px');
+			//echo $no_agenda;
 		}
 	}
 
@@ -158,6 +177,12 @@ class Surat extends AUTH_Controller {
 						$check = $this->M_surat->check_nama($value['C']);
 
 						if ($check != 1) {
+							//$var  = PHPExcel_Style_NumberFormat::toFormattedString($dataRow[1],  ‘YYYY-MM-DD’);
+							
+							//$tgl_agenda = $resultData[$index]['no_agenda'];
+							//$date = str_replace('/', '-', $tgl_agenda);
+							//$tgl = date('Y-m-d',strtotime($date));
+							//date('Y-m-d',strtotime(str_replace('/', '-', $resultData[$index]['tgl_agenda'] = $value['B'])));
 							$resultData[$index]['tgl_agenda'] = $value['B'];
 							$resultData[$index]['no_agenda'] = $value['C'];
 							$resultData[$index]['asal_surat'] = $value['D'];

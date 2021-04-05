@@ -48,9 +48,14 @@ class M_surat extends CI_Model {
 
 		return $this->db->affected_rows();
 	}
+	public function upload($data, $no_agenda) {
+		$this->db->where("no_agenda", $no_agenda);
+		$this->db->update("arsipsurat", $data);
 
+		return $this->db->affected_rows();
+	}
 	public function delete($id) {
-		$sql = "DELETE FROM arsipsurat WHERE no_agenda='" .$id ."'";
+		$sql = "DELETE FROM arsipsurat WHERE no_agenda='".$id."'";
 
 		$this->db->query($sql);
 
@@ -59,9 +64,15 @@ class M_surat extends CI_Model {
 
 	public function check_nama($no_agenda) {
 		$this->db->where('no_agenda', $no_agenda);
+		//$this->db->where('no_agenda is not null', null);
 		$data = $this->db->get('arsipsurat');
 
 		return $data->num_rows();
+		/*$sql = "select * from arsipsurat WHERE no_agenda='".$no_agenda."' and no_agenda !=''";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();*/
 	}
 
 	public function total_rows() {
