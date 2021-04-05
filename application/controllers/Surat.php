@@ -83,8 +83,8 @@ class Surat extends AUTH_Controller {
 	}
 
 	public function delete() {
-		$id_surat = $_POST['id_surat'];
-		$result = $this->M_surat->delete($id_surat);
+		$no_agenda = $_POST['no_agenda'];
+		$result = $this->M_surat->delete($no_agenda);
 		
 		if ($result > 0) {
 			echo show_succ_msg('Data surat Berhasil dihapus', '20px');
@@ -147,15 +147,31 @@ class Surat extends AUTH_Controller {
 
 				$inputFileName = './assets/excel/' .$data['file_name'];
 				$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
-				$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+				$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true,true,true,true,true,null);
+				//$sheetData = $objPHPExcel->getActiveSheet()->getCell('B7')->getValue();
 
-				$index = 0;
+
+				$index = 1;
 				foreach ($sheetData as $key => $value) {
+					
 					if ($key != 1) {
-						$check = $this->M_surat->check_nama($value['B']);
+						$check = $this->M_surat->check_nama($value['C']);
 
 						if ($check != 1) {
-							$resultData[$index]['nama'] = ucwords($value['B']);
+							$resultData[$index]['tgl_agenda'] = $value['B'];
+							$resultData[$index]['no_agenda'] = $value['C'];
+							$resultData[$index]['asal_surat'] = $value['D'];
+							$resultData[$index]['tujuan'] = $value['E'];
+							$resultData[$index]['no_surat'] = $value['F'];
+							$resultData[$index]['tgl_surat'] = $value['G'];
+							$resultData[$index]['perihal'] = $value['H'];
+							  /*$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$index, $value['tgl_agenda']);     
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$index, $value['no_agenda']);
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$index, $value['asal_surat']); 
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$index, $value['tujuan']);           
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$index, $value['no_surat']);
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$index, $value['tgl_surat']);
+							  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$index, $value['perihal']);*/
 						}
 					}
 					$index++;

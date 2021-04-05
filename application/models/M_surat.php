@@ -4,15 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_surat extends CI_Model {
 	public function select_all() {
 		$this->db->select('*');
-		$this->db->from('program');
+		$this->db->from('arsipsurat');
 
 		$data = $this->db->get();
 
 		return $data->result();
 	}
 
-	public function select_by_id($id_program) {
-		$sql = "SELECT * FROM program WHERE id_program = '{$id_program}'";
+	public function select_by_id($no_agenda) {
+		$sql = "SELECT * FROM arsipsurat WHERE no_agenda = '{$no_agenda}'";
 
 		$data = $this->db->query($sql);
 
@@ -36,7 +36,7 @@ class M_surat extends CI_Model {
 	}
 
 	public function insert_batch($data) {
-		$this->db->insert_batch('program', $data);
+		$this->db->insert_batch('arsipsurat', $data);
 		
 		return $this->db->affected_rows();
 	}
@@ -50,22 +50,22 @@ class M_surat extends CI_Model {
 	}
 
 	public function delete($id) {
-		$sql = "DELETE FROM program WHERE id_program='" .$id ."'";
+		$sql = "DELETE FROM arsipsurat WHERE no_agenda='" .$id ."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 
-	public function check_nama($nama) {
-		$this->db->where('nama_program', $nama);
-		$data = $this->db->get('program');
+	public function check_nama($no_agenda) {
+		$this->db->where('no_agenda', $no_agenda);
+		$data = $this->db->get('arsipsurat');
 
 		return $data->num_rows();
 	}
 
 	public function total_rows() {
-		$data = $this->db->get('program');
+		$data = $this->db->get('arsipsurat');
 
 		return $data->num_rows();
 	}
